@@ -13,6 +13,13 @@ urlpatterns = [
     path('lifecycle/', views.lifecycle.as_view(), name='Lifecycle'),
     path('lifestage/', views.lifeStage.as_view(), name='Lifestage'),
     path('healthstatus/', views.HealthStatus.as_view(), name='HealthStatus'),
+    path('breedingmethod/', views.BreedingMethod.as_view(), name='breedingmethod'),
+    path('healthstatus/', views.HealthStatus.as_view(), name='HealthStatus'),
+    path('OperationalStatus/', views.OperationalStatus.as_view(), name='OperationalStatus'),
+    path('PaymentMethod/', views.PaymentMethod.as_view(), name='PaymentMethod'),
+    path('PaymentType/', views.PaymentType.as_view(), name='PaymentType'),
+    path('Results/', views.Results.as_view(), name='Results'),
+    path('Shifts/', views.Shifts.as_view(), name='Shifts'),
     path('insertprofile/',views.AnimalProfileView.as_view())
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
