@@ -56,24 +56,29 @@ class BreedingMethod(APIView):
         serializer = serializers.BreedingMethodsSerializer(BM, many=True)
         return Response(serializer.data)
 class PaymentMethod(APIView):
-    def post(self, request, format=None):
+    def get(self, request, format=None):
         PaymentMethod = models.PaymentMethod.objects.all()
         serializer = serializers.PaymentMethodSerializer(PaymentMethod, many=True)
         return Response(serializer.data)
 class PaymentType(APIView):
-    def post(self, request, format=None):
+    def get(self, request, format=None):
         PaymentType = models.PaymentType.objects.all()
         serializer = serializers.PaymentTypeSerializer(PaymentType, many=True)
         return Response(serializer.data)
 class Results(APIView):
-    def post(self, request, format=None):
+    def get(self, request, format=None):
         Results = models.Results.objects.all()
         serializer = serializers.ResultsSerializer(Results, many=True)
         return Response(serializer.data)
 class Shifts(APIView):
-    def post(self, request, format=None):
+    def get(self, request, format=None):
         Results = models.Shifts.objects.all()
         serializer = serializers.ShiftsSerializer(Results, many=True)
+        return Response(serializer.data)
+class OperationalStatus(APIView):
+    def get(self, request, format=None):
+        Results = models.OperationalStatus.objects.all()
+        serializer = serializers.OperationalStatusSerializer(Results, many=True)
         return Response(serializer.data)
 
 #Store Data  
