@@ -14,13 +14,23 @@ class AnimalProfileView(APIView):
         print (serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-class AnimalStatusInsert(APIView):
+class HeatlthStatusInsert(APIView):
     def post(self, request, format=None):
         serializer = serializers.HealthStatusSerializer(data=request.data)
         print (serializer)
         if serializer.is_valid():
             serializer.save()
-            return Response({"message": "Animal profile created successfully", "data": serializer.data}, status=200)
+            return Response({"message": "Health Status Updated Successfully", "data": serializer.data}, status=200)
+        print (serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class AnimalStageInsert(APIView):
+    def post(self, request, format=None):
+        serializer = serializers.AnimalLifeStageSerializer(data=request.data)
+        print (serializer)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Health Status Updated Successfully", "data": serializer.data}, status=200)
         print (serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
