@@ -80,16 +80,6 @@ class OperationalStatus(APIView):
         Results = models.OperationalStatus.objects.all()
         serializer = serializers.OperationalStatusSerializer(Results, many=True)
         return Response(serializer.data)
+  
 
-#Store Data  
-class AnimalProfileView(APIView):
-    def post(self, request, format=None):
-        serializer = serializers.AnimalProfileSerializer(data=request.data)
-        print (serializer)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"message": "Animal profile created successfully", "data": serializer.data}, status=200)
-        print (serializer.errors)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
 

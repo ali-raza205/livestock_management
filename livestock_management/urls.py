@@ -1,6 +1,6 @@
 from django.urls import path
 from livestock_management import settings
-from lms import views
+from lms import views, insert_view
 from django.conf.urls.static import static
 
 
@@ -20,6 +20,6 @@ urlpatterns = [
     path('PaymentType/', views.PaymentType.as_view(), name='PaymentType'),
     path('Results/', views.Results.as_view(), name='Results'),
     path('Shifts/', views.Shifts.as_view(), name='Shifts'),
-    path('insertprofile/',views.AnimalProfileView.as_view())
+    path('insertprofile/',insert_view.AnimalProfileView.as_view())
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
