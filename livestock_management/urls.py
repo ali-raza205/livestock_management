@@ -27,6 +27,10 @@ urlpatterns = [
     path('Equipments/',insert_view.Equipments.as_view()),
     path('FarmImplements/',insert_view.FarmImplements.as_view()),
     path('FeedingRecord/',insert_view.FeedingRecord.as_view()),
+    path('HealthRecord/',insert_view.HealthRecord.as_view()),
+    path('MilkBuyer/',insert_view.MilkBuyer.as_view()),
+    path('MilkSales/',insert_view.MilkSales.as_view()),
+    path('MilkingRecord/',insert_view.MilkingRecord.as_view()),
     path('insertCrops/',insert_view.CropsInsert.as_view())
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

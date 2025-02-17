@@ -80,7 +80,7 @@ class Equipments(APIView):
         print (serializer)
         if serializer.is_valid():
             serializer.save()
-            return Response({"message": "Dead Animals Created successfully", "data": serializer.data}, status=200)
+            return Response({"message": "Equipments Created successfully", "data": serializer.data}, status=200)
         print (serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
     
@@ -104,3 +104,52 @@ class FeedingRecord(APIView):
         print (serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
 
+class HealthRecord(APIView):
+    def post(self, request, format=None):
+        serializer = serializers.HealthRecordSerializer(data=request.data)
+        print (serializer)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Health Record Created successfully", "data": serializer.data}, status=200)
+        print (serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
+
+class MilkBuyer(APIView):
+    def post(self, request, format=None):
+        serializer = serializers.MilkBuyerSerializer(data=request.data)
+        print (serializer)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Milk Buyer Created successfully", "data": serializer.data}, status=200)
+        print (serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
+    
+class MilkSales(APIView):
+    def post(self, request, format=None):
+        serializer = serializers.MilkSalesSerializer(data=request.data)
+        print (serializer)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Milk Sales Created successfully", "data": serializer.data}, status=200)
+        print (serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
+
+class MilkingRecord(APIView):
+    def post(self, request, format=None):
+        serializer = serializers.MilkingRecordSerializer(data=request.data)
+        print (serializer)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "MilkingRecord Created successfully", "data": serializer.data}, status=200)
+        print (serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
+    
+class Staff(APIView):
+    def post(self, request, format=None):
+        serializer = serializers.StaffSerializer(data=request.data)
+        print (serializer)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Staff Created successfully", "data": serializer.data}, status=200)
+        print (serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
