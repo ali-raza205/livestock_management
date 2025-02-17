@@ -100,7 +100,7 @@ class FeedingRecord(APIView):
         print (serializer)
         if serializer.is_valid():
             serializer.save()
-            return Response({"message": "Dead Animals Created successfully", "data": serializer.data}, status=200)
+            return Response({"message": "Feeding Record Created successfully", "data": serializer.data}, status=200)
         print (serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
 
