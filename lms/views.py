@@ -80,6 +80,12 @@ class OperationalStatus(APIView):
         Results = models.OperationalStatus.objects.all()
         serializer = serializers.OperationalStatusSerializer(Results, many=True)
         return Response(serializer.data)
+    
+class PurchaseType(APIView):
+    def get(self, request, format=None):
+        Results = models.PurchaseType.objects.all()
+        serializer = serializers.PurchaseTypeSerializer(Results, many=True)
+        return Response(serializer.data)
   
 
 

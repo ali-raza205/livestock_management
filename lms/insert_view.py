@@ -153,3 +153,13 @@ class Staff(APIView):
             return Response({"message": "Staff Created successfully", "data": serializer.data}, status=200)
         print (serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
+
+class InsertFarmPurchase(APIView):
+    def post(self, request, format=None):
+        serializer = serializers.FarmPurchaseSerializer(data=request.data)
+        print (serializer)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Purchase successfully", "data": serializer.data}, status=200)
+        print (serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  

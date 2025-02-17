@@ -50,7 +50,7 @@ class AnimalLifeStage(models.Model):
 
 
 class AnimalProfile(models.Model):
-    profile_id = models.BigAutoField(primary_key=True)
+    animal_id = models.BigAutoField(primary_key=True)
     animal_tag_code = models.IntegerField()
     breed = models.ForeignKey('Breeds', models.DO_NOTHING, blank=True, null=True)
     gender = models.ForeignKey('Gender', models.DO_NOTHING, blank=True, null=True)
@@ -176,15 +176,17 @@ class Equipments(models.Model):
         db_table = 'equipments'
 
 
-class FarmImplements(models.Model):
-    implement_id = models.BigAutoField(primary_key=True)
-    implement_name = models.TextField()
+class FarmPurchase(models.Model):
+    purchase_id = models.BigAutoField(primary_key=True)
     purchase_date = models.DateField(blank=True, null=True)
-    operational_status = models.ForeignKey('OperationalStatus', models.DO_NOTHING)
+    purchase_type = models.ForeignKey('PurchaseType', models.DO_NOTHING, blank=True, null=True)
+    description = models.TextField()
+    price = models.FloatField()
+    quantity = models.BigIntegerField()
 
     class Meta:
         managed = False
-        db_table = 'farm_implements'
+        db_table = 'farm_purchase'
 
 
 class FeedingRecord(models.Model):
@@ -346,6 +348,15 @@ class Pricing(models.Model):
     class Meta:
         managed = False
         db_table = 'pricing'
+
+
+class PurchaseType(models.Model):
+    purchase_type_id = models.BigAutoField(primary_key=True)
+    purchase_type_name = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'purchase_type'
 
 
 class Results(models.Model):

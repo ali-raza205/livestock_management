@@ -2,7 +2,7 @@ from rest_framework import serializers
 from livestock_management.models import AnimalProfile, AnimalSale, AnimalType, BreedingMethods, BreedingRecord, Breeds, DeadAnimals,\
     FeedingRecord, Feeds, Gender, HealthRecord, HealthStatus, Lifecycle, MilkBuyer, MilkBuyerType, MilkSales, \
     MilkingRecord, PaymentMethod, PaymentType, Pricing, Results, Shifts, Staff, AnimalAcquisition, LifeStage, \
-    AnimalLifeCycle, AnimalLifeStage,CurrentLifeCycle,CurrentLifeStage, OperationalStatus,Crops, Equipments
+    AnimalLifeCycle, AnimalLifeStage,CurrentLifeCycle,CurrentLifeStage, OperationalStatus,Crops, Equipments, PurchaseType, FarmPurchase
 
 # Serializer for AnimalProfile model
 class AnimalProfileSerializer(serializers.ModelSerializer):
@@ -148,6 +148,10 @@ class PaymentTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaymentType
         fields = '__all__'
+class PurchaseTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PurchaseType
+        fields = '__all__'
 
 # Serializer for Pricing model
 class PricingSerializer(serializers.ModelSerializer):
@@ -182,4 +186,10 @@ class EquipmentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Equipments
         fields = '__all__'
+
+class FarmPurchaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FarmPurchase
+        fields = '__all__'
+
 
