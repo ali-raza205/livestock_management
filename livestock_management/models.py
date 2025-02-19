@@ -341,6 +341,16 @@ class OperationalStatus(models.Model):
         db_table = 'operational_status'
 
 
+class ParentDetails(models.Model):
+    parent_details_id = models.BigAutoField(primary_key=True)
+    parent = models.ForeignKey(AnimalProfile, models.DO_NOTHING)
+    animal = models.ForeignKey(AnimalProfile, models.DO_NOTHING, related_name='parentdetails_animal_set')
+
+    class Meta:
+        managed = False
+        db_table = 'parent_details'
+
+
 class PaymentMethod(models.Model):
     payemnt_method_id = models.BigAutoField(primary_key=True)
     payment_method_name = models.TextField()
