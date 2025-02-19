@@ -9,12 +9,22 @@ from django.db import models
 
 
 class AnimalAcquisition(models.Model):
-    animal_acquisition_id = models.BigIntegerField(primary_key=True)
-    animal_acquisition_type = models.TextField()
+    acquisition_id = models.BigIntegerField(primary_key=True)
+    acquisition_type = models.TextField()
 
     class Meta:
         managed = False
         db_table = 'animal_acquisition'
+
+
+class AnimalCode(models.Model):
+    code_id = models.BigAutoField(primary_key=True)
+    code_text = models.TextField(unique=True)
+    code_status = models.BooleanField()
+
+    class Meta:
+        managed = False
+        db_table = 'animal_code'
 
 
 class AnimalImage(models.Model):
@@ -51,11 +61,10 @@ class AnimalLifeStage(models.Model):
 
 class AnimalProfile(models.Model):
     animal_id = models.BigAutoField(primary_key=True)
-    animal_tag_code = models.IntegerField()
     breed = models.ForeignKey('Breeds', models.DO_NOTHING, blank=True, null=True)
     gender = models.ForeignKey('Gender', models.DO_NOTHING, blank=True, null=True)
     d_o_b = models.DateField(blank=True, null=True)
-    parent_id = models.BigIntegerField(blank=True, null=True)
+    accusation = models.ForeignKey(AnimalAcquisition, models.DO_NOTHING, db_column='Accusation_id', blank=True, null=True)  # Field name made lowercase.
     animal_type = models.ForeignKey('AnimalType', models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
@@ -83,6 +92,16 @@ class AnimalType(models.Model):
     class Meta:
         managed = False
         db_table = 'animal_type'
+
+
+class AssignCode(models.Model):
+    animal_code_id = models.BigAutoField(primary_key=True)
+    code = models.ForeignKey(AnimalCode, models.DO_NOTHING)
+    animal = models.ForeignKey(AnimalProfile, models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'assign_code'
 
 
 class BreedingMethods(models.Model):
@@ -357,6 +376,14 @@ class PurchaseType(models.Model):
     class Meta:
         managed = False
         db_table = 'purchase_type'
+
+
+class ReleasedCode(models.Model):
+    code = models.OneToOneField(AnimalCode, models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'released_code'
 
 
 class Results(models.Model):

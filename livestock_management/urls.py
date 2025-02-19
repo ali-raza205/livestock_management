@@ -21,7 +21,7 @@ urlpatterns = [
     path('Results/', views.Results.as_view(), name='Results'),
     path('Shifts/', views.Shifts.as_view(), name='Shifts'),
      path('purchasetype/', views.PurchaseType.as_view(), name='Shifts'),
-    path('insertprofile/',insert_view.AnimalProfileView.as_view()),
+    path('insertprofile/',insert_view.InsertAnimal.as_view()),
     path('animalsale/',insert_view.AnimalSale.as_view()),
     path('breedingrecord/',insert_view.AnimalSale.as_view()),
     path('deadanimals/',insert_view.DeadAnimals.as_view()),
