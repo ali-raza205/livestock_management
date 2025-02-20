@@ -38,7 +38,7 @@ class AnimalImage(models.Model):
 
 
 class AnimalLifeCycle(models.Model):
-    animal_licecycle_id = models.BigIntegerField(primary_key=True)
+    animal_licecycle_id = models.BigAutoField(primary_key=True)
     life_cycle = models.ForeignKey('Lifecycle', models.DO_NOTHING)
     date = models.DateField(blank=True, null=True)
     animal = models.ForeignKey('AnimalProfile', models.DO_NOTHING, blank=True, null=True)
@@ -49,7 +49,7 @@ class AnimalLifeCycle(models.Model):
 
 
 class AnimalLifeStage(models.Model):
-    animal_lifestage_id = models.BigIntegerField(primary_key=True)
+    animal_lifestage_id = models.BigAutoField(primary_key=True)
     life_stage = models.ForeignKey('LifeStage', models.DO_NOTHING)
     start_date = models.DateField()
     animal = models.ForeignKey('AnimalProfile', models.DO_NOTHING, blank=True, null=True)
@@ -435,3 +435,4 @@ class Staff(models.Model):
     class Meta:
         managed = False
         db_table = 'staff'
+

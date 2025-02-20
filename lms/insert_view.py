@@ -9,10 +9,11 @@ class InsertAnimal(APIView):
         try:
             # Create animal profile
             profile_serializer = serializers.AnimalProfileSerializer(data=request.data)
+            print(profile_serializer)
             if not profile_serializer.is_valid():
                 return Response({
                     "message": "Validation error",
-                    "errors": profile_serializer.errors
+                    "errors": print(profile_serializer.errors)
                 }, status=status.HTTP_400_BAD_REQUEST)
             
             animal_profile = profile_serializer.save()
@@ -33,7 +34,7 @@ class InsertAnimal(APIView):
                 if not life_stage_serializer.is_valid():
                     return Response({
                         "message": "Life stage validation error",
-                        "errors": life_stage_serializer.errors
+                        "errors": print(life_stage_serializer.errors)
                     }, status=status.HTTP_400_BAD_REQUEST)
                 life_stage_serializer.save()
             
@@ -48,23 +49,91 @@ class InsertAnimal(APIView):
                 if not current_life_stage_serializer.is_valid():
                     return Response({
                         "message": "Current life stage validation error",
-                        "errors": current_life_stage_serializer.errors
+                        "errors": print(current_life_stage_serializer.errors)
                     }, status=status.HTTP_400_BAD_REQUEST)
                 current_life_stage_serializer.save()
+
+            # Handle AnimalLifeCycle if provided
+            life_cycle_serializer = None
+            if 'life_cycle' in request.data:
+                life_cycle_data = {
+                    'animal': animal_profile.animal_id,
+                    'life_cycle': request.data['life_cycle'],
+                    'date': request.data['life_cycle_date']
+                }
+                life_cycle_serializer = serializers.AnimalLifeCycleSerializer(data=life_cycle_data)
+                if not life_cycle_serializer.is_valid():
+                    return Response({
+                        "message": "Life cycle validation error",
+                        "errors": print(life_cycle_serializer.errors)
+                    }, status=status.HTTP_400_BAD_REQUEST)
+                life_cycle_serializer.save()
+
+            # Handle CurrentLifeCycle if provided
+            current_life_cycle_serializer = None
+            if 'current_life_cycle' in request.data:
+                current_life_cycle_data = {
+                    'animal_id': animal_profile.animal_id,
+                    'life_cycle_id': request.data['current_life_cycle']
+                }
+                current_life_cycle_serializer = serializers.CurrentLifeCycleSerializer(data=current_life_cycle_data)
+                if not current_life_cycle_serializer.is_valid():
+                    return Response({
+                        "message": "Current life cycle validation error",
+                        "errors": print(current_life_cycle_serializer.errors)
+                    }, status=status.HTTP_400_BAD_REQUEST)
+                current_life_cycle_serializer.save()
+
+            # Handle ParentDetails if provided
+            parent_details_serializer = None
+            if 'parent_details' in request.data:
+                parent_details_data = {
+                    'parent': request.data['parent_details'],
+                    'animal': animal_profile.animal_id
+                }
+                parent_details_serializer = serializers.ParentDetailsSerializer(data=parent_details_data)
+                if not parent_details_serializer.is_valid():
+                    return Response({
+                        "message": "Parent details validation error",
+                        "errors": print(parent_details_serializer.errors)
+                    }, status=status.HTTP_400_BAD_REQUEST)
+                parent_details_serializer.save()
+
+            # Handle AnimalImages if provided
+            image_serializers = []
+            if 'images' in request.data and isinstance(request.data['images'], list):
+                for image_data in request.data['images']:
+                    image_data['profile'] = animal_profile.animal_id
+                    image_serializer = serializers.AnimalImageSerializer(data=image_data)
+                    if not image_serializer.is_valid():
+                        return Response({
+                            "message": "Image validation error",
+                            "errors": print(image_serializer.errors)
+                        }, status=status.HTTP_400_BAD_REQUEST)
+                    image_serializer.save()
+                    image_serializers.append(image_serializer.data)
             
             return Response({
                 "message": "Animal profile and related data created successfully",
                 "data": {
                     "profile": profile_serializer.data,
                     "life_stage": life_stage_serializer.data if life_stage_serializer else None,
-                    "current_life_stage": current_life_stage_serializer.data if current_life_stage_serializer else None
+                    "current_life_stage": current_life_stage_serializer.data if current_life_stage_serializer else None,
+                    "life_cycle": life_cycle_serializer.data if life_cycle_serializer else None,
+                    "current_life_cycle": current_life_cycle_serializer.data if current_life_cycle_serializer else None,
+                    "parent_details": parent_details_serializer.data if parent_details_serializer else None,
+                    "images": image_serializers
                 }
             }, status=status.HTTP_201_CREATED)
             
         except Exception as e:
+            import traceback
+            print(f"Error creating animal profile: {str(e)}")
+            print(traceback.format_exc())
             return Response({
                 "message": "Error creating animal profile",
-                "error": str(e)
+                "error": str(e),
+                "traceback": traceback.format_exc()
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 class HeatlthStatusInsert(APIView):
@@ -228,7 +297,7 @@ def get_available_code():
     else:
         # Generate a new code if no unused codes exist
         last_code = models.AnimalCode.objects.order_by('-code_id').first()
-        new_code = str(int(last_code.code_text) + 1) if last_code else "0001"  # Start from 1000
+        new_code = str(int(last_code.code_text) + 1) if last_code else "1000"  # Start from 1000
         return models.AnimalCode.objects.create(code_text=new_code, code_status=True).code_text
 def assign_code_to_animal(animal):
     """Assigns an available code to a new animal."""
